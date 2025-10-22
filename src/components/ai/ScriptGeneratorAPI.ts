@@ -23,6 +23,8 @@ export class ScriptGeneratorAPI {
         return this.callCopilot(apiKey, prompt);
       case 'microsoft-copilot':
         return this.callMicrosoftCopilot(apiKey, prompt);
+      case 'meta':
+        return this.callMeta(apiKey, prompt);
       default:
         throw new Error(`Provider ${provider.id} não suportado`);
     }
@@ -250,6 +252,27 @@ Escreva todo o roteiro no idioma especificado pelo usuário.
     });
 
     if (!response.ok) throw new Error("Erro ao gerar roteiro com Microsoft Copilot");
+    
+    const data = await response.json();
+    return data.choices[0].message.content;
+  }
+
+  private static async callMeta(apiKey: string, prompt: string): Promise<string> {
+    const response = await fetch("https://api.together.xyz/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
+        messages: [{ role: "user", content: prompt }],
+        max_tokens: 2000,
+        temperature: 0.7,
+      }),
+    });
+
+    if (!response.ok) throw new Error("Erro ao gerar roteiro com Meta AI");
     
     const data = await response.json();
     return data.choices[0].message.content;

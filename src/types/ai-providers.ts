@@ -79,6 +79,14 @@ export const AI_PROVIDERS: AIProvider[] = [
     endpoint: 'https://YOUR-RESOURCE.openai.azure.com/openai/deployments/YOUR-DEPLOYMENT/chat/completions',
     keyName: 'microsoft_copilot_api_key',
     getApiKeyUrl: 'https://portal.azure.com/'
+  },
+  {
+    id: 'meta',
+    name: 'Meta AI (Llama)',
+    icon: '🔵',
+    endpoint: 'https://api.together.xyz/v1/chat/completions',
+    keyName: 'meta_api_key',
+    getApiKeyUrl: 'https://www.together.ai/products'
   }
 ];
 
