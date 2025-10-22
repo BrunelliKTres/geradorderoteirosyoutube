@@ -71,6 +71,14 @@ export const AI_PROVIDERS: AIProvider[] = [
     endpoint: 'https://api.githubcopilot.com/chat/completions',
     keyName: 'copilot_api_key',
     getApiKeyUrl: 'https://github.com/settings/copilot'
+  },
+  {
+    id: 'microsoft-copilot',
+    name: 'Microsoft Copilot (Azure)',
+    icon: '🔷',
+    endpoint: 'https://YOUR-RESOURCE.openai.azure.com/openai/deployments/YOUR-DEPLOYMENT/chat/completions',
+    keyName: 'microsoft_copilot_api_key',
+    getApiKeyUrl: 'https://portal.azure.com/'
   }
 ];
 

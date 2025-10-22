@@ -21,6 +21,8 @@ export class ScriptGeneratorAPI {
         return this.callPerplexity(apiKey, prompt);
       case 'copilot':
         return this.callCopilot(apiKey, prompt);
+      case 'microsoft-copilot':
+        return this.callMicrosoftCopilot(apiKey, prompt);
       default:
         throw new Error(`Provider ${provider.id} não suportado`);
     }
@@ -223,6 +225,31 @@ Escreva todo o roteiro no idioma especificado pelo usuário.
     });
 
     if (!response.ok) throw new Error("Erro ao gerar roteiro com GitHub Copilot");
+    
+    const data = await response.json();
+    return data.choices[0].message.content;
+  }
+
+  private static async callMicrosoftCopilot(apiKey: string, prompt: string): Promise<string> {
+    // Nota: O usuário precisará configurar o endpoint correto do Azure OpenAI
+    // Format: https://{resource-name}.openai.azure.com/openai/deployments/{deployment-id}/chat/completions?api-version=2024-02-15-preview
+    const azureEndpoint = apiKey.includes('|') ? apiKey.split('|')[1] : 'https://YOUR-RESOURCE.openai.azure.com/openai/deployments/YOUR-DEPLOYMENT/chat/completions';
+    const actualApiKey = apiKey.includes('|') ? apiKey.split('|')[0] : apiKey;
+    
+    const response = await fetch(`${azureEndpoint}?api-version=2024-02-15-preview`, {
+      method: "POST",
+      headers: {
+        "api-key": actualApiKey,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        messages: [{ role: "user", content: prompt }],
+        max_tokens: 2000,
+        temperature: 0.7,
+      }),
+    });
+
+    if (!response.ok) throw new Error("Erro ao gerar roteiro com Microsoft Copilot");
     
     const data = await response.json();
     return data.choices[0].message.content;
