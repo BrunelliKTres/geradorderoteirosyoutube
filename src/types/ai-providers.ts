@@ -63,6 +63,14 @@ export const AI_PROVIDERS: AIProvider[] = [
     endpoint: 'https://api.perplexity.ai/chat/completions',
     keyName: 'perplexity_api_key',
     getApiKeyUrl: 'https://www.perplexity.ai/settings/api'
+  },
+  {
+    id: 'copilot',
+    name: 'GitHub Copilot',
+    icon: '⚪',
+    endpoint: 'https://api.githubcopilot.com/chat/completions',
+    keyName: 'copilot_api_key',
+    getApiKeyUrl: 'https://github.com/settings/copilot'
   }
 ];
 

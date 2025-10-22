@@ -19,6 +19,8 @@ export class ScriptGeneratorAPI {
         return this.callDeepSeek(apiKey, prompt);
       case 'perplexity':
         return this.callPerplexity(apiKey, prompt);
+      case 'copilot':
+        return this.callCopilot(apiKey, prompt);
       default:
         throw new Error(`Provider ${provider.id} não suportado`);
     }
@@ -200,6 +202,27 @@ Escreva todo o roteiro no idioma especificado pelo usuário.
     });
 
     if (!response.ok) throw new Error("Erro ao gerar roteiro com Perplexity");
+    
+    const data = await response.json();
+    return data.choices[0].message.content;
+  }
+
+  private static async callCopilot(apiKey: string, prompt: string): Promise<string> {
+    const response = await fetch("https://api.githubcopilot.com/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "gpt-4o",
+        messages: [{ role: "user", content: prompt }],
+        max_tokens: 2000,
+        temperature: 0.7,
+      }),
+    });
+
+    if (!response.ok) throw new Error("Erro ao gerar roteiro com GitHub Copilot");
     
     const data = await response.json();
     return data.choices[0].message.content;
