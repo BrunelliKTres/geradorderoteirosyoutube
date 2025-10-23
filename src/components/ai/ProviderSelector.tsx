@@ -24,10 +24,17 @@ export const ProviderSelector = ({ selectedProvider, onProviderChange }: Provide
         <SelectContent className="bg-card border-border">
           {AI_PROVIDERS.map((provider) => (
             <SelectItem key={provider.id} value={provider.id}>
-              <span className="flex items-center gap-2">
-                <span>{provider.icon}</span>
-                {provider.name}
-              </span>
+              <div className="flex flex-col gap-0.5">
+                <span className="flex items-center gap-2">
+                  <span>{provider.icon}</span>
+                  <span>{provider.name}</span>
+                </span>
+                {provider.costInfo && (
+                  <span className="text-xs text-muted-foreground ml-6">
+                    {provider.costInfo}
+                  </span>
+                )}
+              </div>
             </SelectItem>
           ))}
         </SelectContent>
