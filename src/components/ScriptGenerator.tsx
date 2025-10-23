@@ -33,6 +33,7 @@ export const ScriptGenerator = () => {
     additionalInfo: "",
     youtubeLink: "",
     qualified: false,
+    characteristics: 5,
   });
   const [generatedScript, setGeneratedScript] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -405,6 +406,24 @@ export const ScriptGenerator = () => {
                     setScriptData({ ...scriptData, qualified: checked })
                   }
                 />
+              </div>
+
+              <div>
+                <Label htmlFor="characteristics">Número de Características/Pontos por Roteiro</Label>
+                <Input
+                  id="characteristics"
+                  type="number"
+                  min="1"
+                  max="20"
+                  placeholder="Ex: 5"
+                  value={scriptData.characteristics || 5}
+                  onChange={(e) =>
+                    setScriptData({ ...scriptData, characteristics: parseInt(e.target.value) || 5 })
+                  }
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Defina quantas características, pontos principais ou seções o roteiro deve ter
+                </p>
               </div>
 
               <div>

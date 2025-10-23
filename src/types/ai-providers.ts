@@ -126,4 +126,5 @@ export interface ScriptData {
   additionalInfo: string;
   youtubeLink: string;
   qualified: boolean;
+  characteristics?: number;
 }
