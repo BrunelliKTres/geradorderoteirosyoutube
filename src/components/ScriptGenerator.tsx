@@ -15,6 +15,7 @@ import { ScriptGeneratorAPI } from "@/components/ai/ScriptGeneratorAPI";
 import { ImageGenerationSection } from "@/components/images/ImageGenerationSection";
 import { AudioGenerationSection } from "@/components/audio/AudioGenerationSection";
 import { CombinedSection } from "@/components/combined/CombinedSection";
+import { VideoGenerationSection } from "@/components/video/VideoGenerationSection";
 
 export const ScriptGenerator = () => {
   console.log("ScriptGenerator component is rendering");
@@ -511,6 +512,11 @@ export const ScriptGenerator = () => {
           {/* Áudio */}
           <div className="max-w-4xl mx-auto">
             <AudioGenerationSection script={generatedScript || ""} />
+          </div>
+
+          {/* Vídeo */}
+          <div className="max-w-4xl mx-auto">
+            <VideoGenerationSection script={generatedScript || ""} />
           </div>
 
           {/* Combinar */}
