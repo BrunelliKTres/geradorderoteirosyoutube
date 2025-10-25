@@ -343,7 +343,7 @@ export const ScriptGenerator = () => {
                     <SelectTrigger>
                       <SelectValue placeholder="Duração" />
                     </SelectTrigger>
-                    <SelectContent className="bg-card border-border">
+                    <SelectContent className="bg-card border-border max-h-[300px]">
                       <SelectItem value="1-3">1-3 min</SelectItem>
                       <SelectItem value="3-5">3-5 min</SelectItem>
                       <SelectItem value="5-10">5-10 min</SelectItem>
@@ -356,6 +356,18 @@ export const ScriptGenerator = () => {
                       <SelectItem value="40-45">40-45 min</SelectItem>
                       <SelectItem value="45-60">45-60 min</SelectItem>
                       <SelectItem value="60+">60+ min</SelectItem>
+                      <SelectItem value="65">65 min</SelectItem>
+                      <SelectItem value="70">70 min</SelectItem>
+                      <SelectItem value="75">75 min</SelectItem>
+                      <SelectItem value="80">80 min</SelectItem>
+                      <SelectItem value="85">85 min</SelectItem>
+                      <SelectItem value="90">90 min</SelectItem>
+                      <SelectItem value="95">95 min</SelectItem>
+                      <SelectItem value="100">100 min</SelectItem>
+                      <SelectItem value="105">105 min</SelectItem>
+                      <SelectItem value="110">110 min</SelectItem>
+                      <SelectItem value="115">115 min</SelectItem>
+                      <SelectItem value="120">120 min</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
