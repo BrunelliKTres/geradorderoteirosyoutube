@@ -16,6 +16,8 @@ import { ImageGenerationSection } from "@/components/images/ImageGenerationSecti
 import { AudioGenerationSection } from "@/components/audio/AudioGenerationSection";
 import { CombinedSection } from "@/components/combined/CombinedSection";
 import { VideoGenerationSection } from "@/components/video/VideoGenerationSection";
+import { Document, Paragraph, TextRun, HeadingLevel, Packer, AlignmentType } from "docx";
+import { saveAs } from "file-saver";
 
 export const ScriptGenerator = () => {
   console.log("ScriptGenerator component is rendering");
@@ -81,18 +83,126 @@ export const ScriptGenerator = () => {
     }
   };
 
-  const downloadScript = () => {
+  const downloadScript = async () => {
     if (!generatedScript) return;
 
-    const blob = new Blob([generatedScript], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `roteiro-${scriptData.topic.replace(/\s+/g, "-")}-${selectedProvider.id}.txt`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    try {
+      // Divide o script em parágrafos
+      const lines = generatedScript.split('\n');
+      const children: Paragraph[] = [];
+
+      // Adiciona título
+      children.push(
+        new Paragraph({
+          text: scriptData.topic || "Roteiro YouTube",
+          heading: HeadingLevel.HEADING_1,
+          alignment: AlignmentType.CENTER,
+          spacing: { after: 400 },
+        })
+      );
+
+      // Adiciona informações do roteiro
+      children.push(
+        new Paragraph({
+          children: [
+            new TextRun({ text: "Duração: ", bold: true }),
+            new TextRun(scriptData.duration || "N/A"),
+          ],
+          spacing: { after: 200 },
+        })
+      );
+
+      children.push(
+        new Paragraph({
+          children: [
+            new TextRun({ text: "Estilo: ", bold: true }),
+            new TextRun(scriptData.style || "N/A"),
+          ],
+          spacing: { after: 200 },
+        })
+      );
+
+      children.push(
+        new Paragraph({
+          children: [
+            new TextRun({ text: "Gerado por: ", bold: true }),
+            new TextRun(`${selectedProvider.name}`),
+          ],
+          spacing: { after: 400 },
+        })
+      );
+
+      // Adiciona linha separadora
+      children.push(
+        new Paragraph({
+          text: "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+          alignment: AlignmentType.CENTER,
+          spacing: { after: 400 },
+        })
+      );
+
+      // Processa cada linha do roteiro
+      for (const line of lines) {
+        if (line.trim() === '') {
+          children.push(new Paragraph({ text: "" }));
+          continue;
+        }
+
+        // Detecta títulos (linhas que começam com #, ## ou são MAIÚSCULAS)
+        if (line.startsWith('#')) {
+          const level = line.startsWith('###') ? HeadingLevel.HEADING_3 
+            : line.startsWith('##') ? HeadingLevel.HEADING_2 
+            : HeadingLevel.HEADING_1;
+          
+          children.push(
+            new Paragraph({
+              text: line.replace(/^#+\s*/, ''),
+              heading: level,
+              spacing: { before: 300, after: 200 },
+            })
+          );
+        } else if (line === line.toUpperCase() && line.length > 3 && /^[A-Z\s]+$/.test(line)) {
+          children.push(
+            new Paragraph({
+              children: [new TextRun({ text: line, bold: true, size: 28 })],
+              spacing: { before: 300, after: 200 },
+            })
+          );
+        } else {
+          children.push(
+            new Paragraph({
+              text: line,
+              spacing: { after: 150 },
+            })
+          );
+        }
+      }
+
+      // Cria o documento
+      const doc = new Document({
+        sections: [{
+          properties: {},
+          children: children,
+        }],
+      });
+
+      // Gera o blob e faz download
+      const blob = await Packer.toBlob(doc);
+      const fileName = `roteiro-${scriptData.topic.replace(/\s+/g, "-")}-${selectedProvider.id}.docx`;
+      saveAs(blob, fileName);
+
+      toast({
+        title: "Download concluído",
+        description: "Roteiro salvo em formato .docx",
+      });
+    } catch (error) {
+      console.error("Erro ao gerar DOCX:", error);
+      toast({
+        title: "Erro no download",
+        description: "Não foi possível gerar o arquivo .docx",
+        variant: "destructive",
+      });
+    }
   };
 
   // Integração com YouTube Data API
