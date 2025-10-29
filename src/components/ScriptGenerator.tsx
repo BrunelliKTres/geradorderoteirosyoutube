@@ -22,6 +22,7 @@ import { saveAs } from "file-saver";
 export const ScriptGenerator = () => {
   console.log("ScriptGenerator component is rendering");
   const [selectedProvider, setSelectedProvider] = useState<AIProvider>(AI_PROVIDERS[0]);
+  const [selectedModel, setSelectedModel] = useState<string>(AI_PROVIDERS[0].models?.[0] || '');
   const [scriptData, setScriptData] = useState<ScriptData>({
     topic: "",
     duration: "",
@@ -316,8 +317,32 @@ export const ScriptGenerator = () => {
             <CardContent className="space-y-4">
               <ProviderSelector 
                 selectedProvider={selectedProvider}
-                onProviderChange={setSelectedProvider}
+                onProviderChange={(provider) => {
+                  setSelectedProvider(provider);
+                  setSelectedModel(provider.models?.[0] || '');
+                }}
               />
+
+              {selectedProvider.models && selectedProvider.models.length > 0 && (
+                <div>
+                  <Label htmlFor="model">Modelo de IA</Label>
+                  <Select
+                    value={selectedModel}
+                    onValueChange={setSelectedModel}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione o modelo" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-card border-border">
+                      {selectedProvider.models.map((model) => (
+                        <SelectItem key={model} value={model}>
+                          {model}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
 
               <div>
                 <Label htmlFor="topic">Tópico do Vídeo *</Label>

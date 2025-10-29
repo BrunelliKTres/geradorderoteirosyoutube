@@ -7,6 +7,7 @@ export interface AIProvider {
   getApiKeyUrl: string;
   costPer1MTokens?: string;
   costInfo?: string;
+  models?: string[];
 }
 
 export const AI_PROVIDERS: AIProvider[] = [
@@ -18,7 +19,8 @@ export const AI_PROVIDERS: AIProvider[] = [
     keyName: 'gemini_api_key',
     getApiKeyUrl: 'https://makersuite.google.com/app/apikey',
     costPer1MTokens: '$0.50',
-    costInfo: 'Custo baixo - ~$0.001 por roteiro'
+    costInfo: 'Custo baixo - ~$0.001 por roteiro',
+    models: ['gemini-2.0-flash-exp', 'gemini-1.5-pro', 'gemini-1.5-flash', 'gemini-pro']
   },
   {
     id: 'openai',
@@ -28,7 +30,8 @@ export const AI_PROVIDERS: AIProvider[] = [
     keyName: 'openai_api_key',
     getApiKeyUrl: 'https://platform.openai.com/api-keys',
     costPer1MTokens: '$10.00',
-    costInfo: 'Custo alto - ~$0.02 por roteiro'
+    costInfo: 'Custo alto - ~$0.02 por roteiro',
+    models: ['gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo', 'gpt-3.5-turbo']
   },
   {
     id: 'claude',
@@ -38,7 +41,8 @@ export const AI_PROVIDERS: AIProvider[] = [
     keyName: 'claude_api_key',
     getApiKeyUrl: 'https://console.anthropic.com/',
     costPer1MTokens: '$3.00',
-    costInfo: 'Custo médio - ~$0.006 por roteiro'
+    costInfo: 'Custo médio - ~$0.006 por roteiro',
+    models: ['claude-sonnet-4-5', 'claude-opus-4-1', 'claude-3-7-sonnet', 'claude-3-5-haiku']
   },
   {
     id: 'grok',
@@ -48,7 +52,8 @@ export const AI_PROVIDERS: AIProvider[] = [
     keyName: 'grok_api_key',
     getApiKeyUrl: 'https://console.x.ai/',
     costPer1MTokens: '$5.00',
-    costInfo: 'Custo médio - ~$0.01 por roteiro'
+    costInfo: 'Custo médio - ~$0.01 por roteiro',
+    models: ['grok-3', 'grok-2', 'grok-beta']
   },
   {
     id: 'mistral',
@@ -58,7 +63,8 @@ export const AI_PROVIDERS: AIProvider[] = [
     keyName: 'mistral_api_key',
     getApiKeyUrl: 'https://console.mistral.ai/',
     costPer1MTokens: '$4.00',
-    costInfo: 'Custo médio - ~$0.008 por roteiro'
+    costInfo: 'Custo médio - ~$0.008 por roteiro',
+    models: ['mistral-large', 'mistral-medium', 'mistral-small', 'mistral-tiny']
   },
   {
     id: 'deepseek',
@@ -68,7 +74,8 @@ export const AI_PROVIDERS: AIProvider[] = [
     keyName: 'deepseek_api_key',
     getApiKeyUrl: 'https://platform.deepseek.com/api_keys',
     costPer1MTokens: '$0.14',
-    costInfo: 'Custo muito baixo - ~$0.0003 por roteiro'
+    costInfo: 'Custo muito baixo - ~$0.0003 por roteiro',
+    models: ['deepseek-chat', 'deepseek-coder', 'deepseek-v3']
   },
   {
     id: 'perplexity',
@@ -78,7 +85,8 @@ export const AI_PROVIDERS: AIProvider[] = [
     keyName: 'perplexity_api_key',
     getApiKeyUrl: 'https://www.perplexity.ai/settings/api',
     costPer1MTokens: '$1.00',
-    costInfo: 'Custo baixo - ~$0.002 por roteiro'
+    costInfo: 'Custo baixo - ~$0.002 por roteiro',
+    models: ['llama-3.1-sonar-large', 'llama-3.1-sonar-small', 'llama-3.1-sonar-huge']
   },
   {
     id: 'copilot',
@@ -88,7 +96,8 @@ export const AI_PROVIDERS: AIProvider[] = [
     keyName: 'copilot_api_key',
     getApiKeyUrl: 'https://github.com/settings/copilot',
     costPer1MTokens: 'Assinatura',
-    costInfo: 'Plano mensal - incluído na assinatura'
+    costInfo: 'Plano mensal - incluído na assinatura',
+    models: ['gpt-4', 'gpt-3.5-turbo']
   },
   {
     id: 'microsoft-copilot',
@@ -98,7 +107,8 @@ export const AI_PROVIDERS: AIProvider[] = [
     keyName: 'microsoft_copilot_api_key',
     getApiKeyUrl: 'https://portal.azure.com/',
     costPer1MTokens: 'Variável',
-    costInfo: 'Depende da configuração Azure'
+    costInfo: 'Depende da configuração Azure',
+    models: ['gpt-4', 'gpt-4-turbo', 'gpt-35-turbo']
   },
   {
     id: 'meta',
@@ -108,7 +118,8 @@ export const AI_PROVIDERS: AIProvider[] = [
     keyName: 'meta_api_key',
     getApiKeyUrl: 'https://www.together.ai/products',
     costPer1MTokens: '$0.60',
-    costInfo: 'Custo baixo - ~$0.0012 por roteiro'
+    costInfo: 'Custo baixo - ~$0.0012 por roteiro',
+    models: ['llama-3.3-70b', 'llama-3.1-405b', 'llama-3.1-70b', 'llama-3.1-8b']
   }
 ];
 
