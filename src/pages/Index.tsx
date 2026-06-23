@@ -2,6 +2,8 @@ import { ScriptGenerator } from "@/components/ScriptGenerator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ImageGenerationSection } from "@/components/images/ImageGenerationSection";
 import { VideoGenerationSection } from "@/components/video/VideoGenerationSection";
+import { AudioGenerationSection } from "@/components/audio/AudioGenerationSection";
+import { CombinedSection } from "@/components/combined/CombinedSection";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
@@ -18,10 +20,12 @@ const Index = () => {
         </Button>
       </div>
       <Tabs defaultValue="scripts" className="max-w-7xl mx-auto">
-        <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 mb-6">
+        <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-5 mb-6">
           <TabsTrigger value="scripts">Roteiros</TabsTrigger>
           <TabsTrigger value="images">Imagens</TabsTrigger>
+          <TabsTrigger value="audio">Áudio</TabsTrigger>
           <TabsTrigger value="videos">Vídeos</TabsTrigger>
+          <TabsTrigger value="combined">Combinar</TabsTrigger>
         </TabsList>
         
         <TabsContent value="scripts">
@@ -32,8 +36,20 @@ const Index = () => {
           <ImageGenerationSection />
         </TabsContent>
         
+        <TabsContent value="audio">
+          <div className="max-w-4xl mx-auto">
+            <AudioGenerationSection script="" />
+          </div>
+        </TabsContent>
+
         <TabsContent value="videos">
           <VideoGenerationSection />
+        </TabsContent>
+
+        <TabsContent value="combined">
+          <div className="max-w-4xl mx-auto">
+            <CombinedSection script="" />
+          </div>
         </TabsContent>
       </Tabs>
     </div>
