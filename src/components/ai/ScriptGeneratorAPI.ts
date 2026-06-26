@@ -25,6 +25,8 @@ export class ScriptGeneratorAPI {
         return this.callMicrosoftCopilot(apiKey, prompt);
       case 'meta':
         return this.callMeta(apiKey, prompt);
+      case 'ppq':
+        return this.callPPQ(apiKey, prompt, model);
       default:
         throw new Error(`Provider ${provider.id} não suportado`);
     }
@@ -276,6 +278,27 @@ Estruture o conteúdo principal em exatamente ${scriptData.characteristics || 5}
 
     if (!response.ok) throw new Error("Erro ao gerar roteiro com Meta AI");
     
+    const data = await response.json();
+    return data.choices[0].message.content;
+  }
+
+  private static async callPPQ(apiKey: string, prompt: string, model?: string): Promise<string> {
+    const response = await fetch("https://api.ppq.ai/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: model || "gpt-4o-mini",
+        messages: [{ role: "user", content: prompt }],
+        max_tokens: 2000,
+        temperature: 0.7,
+      }),
+    });
+
+    if (!response.ok) throw new Error("Erro ao gerar roteiro com PPQ.AI");
+
     const data = await response.json();
     return data.choices[0].message.content;
   }

@@ -120,6 +120,17 @@ export const AI_PROVIDERS: AIProvider[] = [
     costPer1MTokens: '$0.60',
     costInfo: 'Custo baixo - ~$0.0012 por roteiro',
     models: ['llama-3.3-70b', 'llama-3.1-405b', 'llama-3.1-70b', 'llama-3.1-8b']
+  },
+  {
+    id: 'ppq',
+    name: 'PPQ.AI',
+    icon: '🟤',
+    endpoint: 'https://api.ppq.ai/chat/completions',
+    keyName: 'ppq_api_key',
+    getApiKeyUrl: 'https://ppq.ai/api',
+    costPer1MTokens: 'Variável',
+    costInfo: 'Acesso unificado a múltiplos modelos (GPT, Claude, Gemini, etc.)',
+    models: ['gpt-4o', 'gpt-4o-mini', 'claude-3-5-sonnet', 'gemini-1.5-pro', 'llama-3.1-405b', 'deepseek-chat']
   }
 ];
 
