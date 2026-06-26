@@ -31,9 +31,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setLoading(false);
+    }).catch((err) => {
+      console.error("getSession error:", err);
+      setLoading(false);
     });
 
-    return () => subscription.unsubscribe();
+    // Safety timeout — never stay stuck on "Carregando..."
+    const timeout = setTimeout(() => setLoading(false), 4000);
+
+    return () => {
+      subscription.unsubscribe();
+      clearTimeout(timeout);
+    };
   }, []);
 
   const signOut = async () => {
