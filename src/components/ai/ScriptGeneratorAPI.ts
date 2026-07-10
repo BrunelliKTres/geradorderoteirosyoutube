@@ -8,7 +8,7 @@ export class ScriptGeneratorAPI {
       case 'gemini':
         return this.callGemini(apiKey, prompt);
       case 'openai':
-        return this.callOpenAI(apiKey, prompt);
+        return this.callOpenAI(apiKey, prompt, model);
       case 'claude':
         return this.callClaude(apiKey, prompt);
       case 'grok':
@@ -89,7 +89,7 @@ Estruture o conteúdo principal em exatamente ${scriptData.characteristics || 5}
     return data.candidates[0].content.parts[0].text;
   }
 
-  private static async callOpenAI(apiKey: string, prompt: string): Promise<string> {
+  private static async callOpenAI(apiKey: string, prompt: string, model?: string): Promise<string> {
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -97,7 +97,7 @@ Estruture o conteúdo principal em exatamente ${scriptData.characteristics || 5}
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "gpt-4",
+        model: model || "gpt-4o-mini",
         messages: [{ role: "user", content: prompt }],
         max_tokens: 2000,
         temperature: 0.7,
